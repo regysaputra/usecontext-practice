@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Posts from '../components/Posts';
+import LocaleContext from '../contexts/LocaleContext';
 
 function Tutorial() {
-  return (
-    <>
-      <h1>Tutorial</h1>
-      <Posts locale="id" />
-    </>
-  );
+	const { locale } = useContext(LocaleContext);
+
+    return (
+        <>
+            <h1>Tutorial</h1>
+            <Posts locale={locale} />
+        </>
+    );
 }
 
 export default Tutorial;

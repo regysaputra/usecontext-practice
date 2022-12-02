@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import LocaleContext from '../contexts/LocaleContext';
 import { home } from '../utils/content';
 
 function Home() {
-  return (
-    <>
-      <h1>{home['id'].header}</h1>
-      <span className="subheader">{home['id'].subheader}</span>
-      <p>{home['id'].paragraph}</p>
-    </>
-  );
+	const { locale } = useContext(LocaleContext);
+
+    return (
+        <>
+            <h1>{home[locale].header}</h1>
+            <span className="subheader">{home[locale].subheader}</span>
+            <p>{home[locale].paragraph}</p>
+        </>
+    );
 }
 
 export default Home;

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LocaleContext from '../contexts/LocaleContext';
+import { useContext } from 'react';
 
 /**
  * @notes
@@ -7,22 +9,24 @@ import { Link } from 'react-router-dom';
  */
 
 function Navigation() {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Beranda</Link>
-        </li>
-        <li>
-          <Link to="/tutorial">Tutorial</Link>
-        </li>
-        <li>
-          <Link to="/community">Komunitas</Link>
-        </li>
-      </ul>
-      <button>English</button>
-    </nav>
-  );
+	const { locale, toggleLocale } = useContext(LocaleContext);
+
+    return (
+        <nav>
+            <ul>
+                <li>
+                    <Link to="/">{locale === 'id' ? 'Beranda' : 'Home'}</Link>
+                </li>
+                <li>
+                    <Link to="/tutorial">Tutorial</Link>
+                </li>
+                <li>
+                    <Link to="/community">{locale === 'id' ? 'Komunitas' : 'Community'}</Link>
+                </li>
+            </ul>
+            <button onClick={toggleLocale}>{locale === 'id' ? 'English' : 'Indonesia'}</button>
+        </nav>
+    );
 }
 
 export default Navigation;

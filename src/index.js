@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Community from './pages/Community';
 import Home from './pages/Home';
 import Tutorial from './pages/Tutorial';
-
+import { useState } from 'react';
 import './styles/style.css';
-
+import LocaleContext from './contexts/LocaleContext';
 /**
  * @todos
  * 1. Buatlah fitur ubah bahasa dengan memanfaatkan Context.
@@ -19,25 +19,42 @@ import './styles/style.css';
  */
 
 function App() {
-  return (
-    <>
-      <header>
-        <Navigation />
-      </header>
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tutorial" element={<Tutorial />} />
-          <Route path="/community" element={<Community />} />
-        </Routes>
-      </main>
-    </>
-  );
+    const [locale, setLocale] = useState('id');
+
+    const toggleLocale = () => {
+        setLocale((prevLocale) => {
+            return prevLocale === 'id' ? 'en' : 'id';
+        });
+    };
+
+    const localeContextValue = useMemo(() => {
+        return {
+            locale,
+            toggleLocale
+        };
+    }, [locale]);
+
+    return (
+        <>
+            <LocaleContext.Provider value={localeContextValue}>
+                <header>
+                    <Navigation />
+                </header>
+                <main>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/tutorial" element={<Tutorial />} />
+                        <Route path="/community" element={<Community />} />
+                    </Routes>
+                </main>
+            </LocaleContext.Provider>
+        </>
+    );
 }
 
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
 );
